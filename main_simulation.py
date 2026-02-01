@@ -16,7 +16,7 @@ import transform
 # Simulation settings
 show_animation = True # True: animation; Flase: figure
 np.random.seed(19910620) # seed the random number generator for reproducibility
-border = {"xmin":-4, "xmax":4, "ymin":-4, "ymax":4, "zmin":0, "zmax":4}
+border = {"xmin": -10, "xmax": 6, "ymin": -6, "ymax": 6, "zmin": 0, "zmax": 6}
 numRob = 4 # number of robots
 dt = 0.01 # time interval [s]
 simTime = 70.0 # simulation time [s]
@@ -49,6 +49,9 @@ def animate(step):
     time_text.set_text("t={:.2f}s".format(step * dt))
     return pointsTrue, pointsEsti, circle, pointsTrueHead, pointsEstiHead, time_text
 
+fps=30
+duration_seconds = 60
+num_frames = fps * duration_seconds
 if show_animation:
     # Set up an animation
     fig = plt.figure()
@@ -66,8 +69,8 @@ if show_animation:
     ax.add_patch(circle)
     time_text = ax.text(0.01, 0.97, '', transform=ax.transAxes)
     time_text.set_text('')
-    ani = animation.FuncAnimation(fig, animate, frames=None, interval=10, blit=True)
-    #ani.save('particle_box.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+    ani = animation.FuncAnimation(fig, animate, frames=num_frames, interval=1000/fps, blit=True)
+    ani.save('particle_box.mp4', fps=fps, extra_args=['-vcodec', 'libx264'])
     plt.show()   
 else:
     # Simulation using while-loop; figure of X-Y-Yaw errors
