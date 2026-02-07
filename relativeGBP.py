@@ -46,10 +46,13 @@ class GBPonSimData:
         self.abs_poses = np.zeros((3, numRob))
 
         # initial covariance (not heavily used)
-        self.Pmatrix = np.zeros((3, 3, numRob))
+        self.Pmatrix = np.zeros((numRob, 3, 3))
         for i in range(numRob):
-            self.Pmatrix[0:2, 0:2, i] = np.eye(2) * Pxy
-            self.Pmatrix[2, 2, i] = Pr
+            self.Pmatrix[i, 0:2, 0:2] = np.eye(2) * Pxy
+            self.Pmatrix[i, 2, 2] = Pr
+
+        print(self.Pmatrix)
+        breakpoint
 
     def GBP(self, uNois, zNois, relativeState, ekfStride):
         dt = ekfStride * 0.01
